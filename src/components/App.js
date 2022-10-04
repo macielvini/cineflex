@@ -1,11 +1,19 @@
+import React from "react";
 import styled from "styled-components";
 import GlobalStyles from "../GlobalStyles";
+import MovieScreen from "./MoviesScreen";
 
 export default function App() {
+  const [movie, setMovie] = React.useState(null);
+
   return (
     <>
       <GlobalStyles />
-      <StyledHeader>CINEFLEX</StyledHeader>
+      <StyledHeader onClick={() => console.log(movie)}>CINEFLEX</StyledHeader>
+      <Wrapper>
+        <PageTitle>Selecione o filme</PageTitle>
+        <MovieScreen setMovie={setMovie} />
+      </Wrapper>
     </>
   );
 }
@@ -28,4 +36,16 @@ const StyledHeader = styled.header`
   font-size: 32px;
   font-weight: 700;
   text-align: center;
+`;
+
+const Wrapper = styled.div`
+  margin: 67px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const PageTitle = styled.p`
+  margin: 30px 0;
+  font-size: 24px;
 `;
