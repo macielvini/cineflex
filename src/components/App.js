@@ -2,17 +2,27 @@ import React from "react";
 import styled from "styled-components";
 import GlobalStyles from "../GlobalStyles";
 import MovieScreen from "./MoviesScreen";
+import Showtime from "./Showtime";
 
 export default function App() {
   const [movie, setMovie] = React.useState(null);
+  const [title, setTitle] = React.useState("Selecione o filme");
 
   return (
     <>
       <GlobalStyles />
-      <StyledHeader onClick={() => console.log(movie)}>CINEFLEX</StyledHeader>
+      <StyledHeader onClick={() => setMovie(null)}>CINEFLEX</StyledHeader>
       <Wrapper>
-        <PageTitle>Selecione o filme</PageTitle>
-        <MovieScreen setMovie={setMovie} />
+        <PageTitle>{title}</PageTitle>
+        {!movie ? (
+          <MovieScreen setMovie={setMovie} />
+        ) : (
+          <Showtime
+            movieTitle={movie.title}
+            setTitle={setTitle}
+            movieId={movie.id}
+          />
+        )}
       </Wrapper>
     </>
   );
@@ -36,6 +46,8 @@ const StyledHeader = styled.header`
   font-size: 32px;
   font-weight: 700;
   text-align: center;
+
+  cursor: pointer;
 `;
 
 const Wrapper = styled.div`

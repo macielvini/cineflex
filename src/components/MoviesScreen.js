@@ -123,4 +123,6 @@ const Poster = styled.div`
   img {
     width: 100%;
   }
+
+  cursor: pointer;
 `;
