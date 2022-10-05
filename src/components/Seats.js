@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const seatsList = {
@@ -31,7 +32,7 @@ const seatsList = {
     {
       id: 3,
       name: "3",
-      isAvailable: true,
+      isAvailable: false,
     },
     {
       id: 4,
@@ -136,12 +137,12 @@ const seatsList = {
     {
       id: 24,
       name: "24",
-      isAvailable: true,
+      isAvailable: false,
     },
     {
       id: 25,
       name: "25",
-      isAvailable: true,
+      isAvailable: false,
     },
     {
       id: 26,
@@ -272,12 +273,29 @@ const seatsList = {
 };
 
 export default function Seats() {
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
+  function addSeat(seat) {
+    const newArr = [...selectedSeats, seat];
+    setSelectedSeats(newArr);
+  }
+
   return (
     <>
       <SeatsWrapper>
-        <StyledSeat>01</StyledSeat>
-        <SelectedSeat>02</SelectedSeat>
-        <UnavaiableSeat>03</UnavaiableSeat>
+        {seatsList.seats.map((s) =>
+          s.isAvailable ? (
+            <StyledSeat
+              key={s.id}
+              isSelected={selectedSeats.includes(s)}
+              onClick={() => addSeat(s)}
+            >
+              {s.name}
+            </StyledSeat>
+          ) : (
+            <UnavaiableSeat key={s.id}>{s.name}</UnavaiableSeat>
+          )
+        )}
       </SeatsWrapper>
 
       <SeatDescriptionRow>
@@ -297,9 +315,19 @@ export default function Seats() {
 
       <StyledForm>
         <label htmlFor="name">Nome do comprador</label>
-        <input id="name" type="text" name="name" />
+        <input
+          id="name"
+          type="text"
+          name="name"
+          placeholder="Digite seu nome..."
+        />
         <label htmlFor="cpf">CPF do comprador</label>
-        <input id="cpf" type="text" name="cpf" />
+        <input
+          id="cpf"
+          type="text"
+          name="cpf"
+          placeholder="Digite seu CPF..."
+        />
       </StyledForm>
 
       <BookSeatBtn>{"Reservar assento(s)"}</BookSeatBtn>
@@ -336,8 +364,8 @@ const StyledSeat = styled.div`
   justify-content: center;
   align-items: center;
 
-  background: #c3cfd9;
-  border: 1px solid #808f9d;
+  background: ${(props) => (props.isSelected ? "#1aae9e " : "#c3cfd9")};
+  border: 1px solid ${(props) => (props.isSelected ? "#0e7d71 " : "#808f9d")};
   border-radius: 50%;
 
   font-size: 11px;
@@ -393,6 +421,9 @@ const StyledForm = styled.div`
 
     border: 1px solid #d5d5d5;
     border-radius: 3px;
+
+    font-size: 18px;
+    padding-left: 10px;
 
     &::placeholder {
       font-weight: 400;
