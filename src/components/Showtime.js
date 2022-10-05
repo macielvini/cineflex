@@ -127,6 +127,8 @@ const Footer = styled.div`
   background: #dfe6ed;
   border: 1px solid #9eadba;
 
+  color: #293845;
+
   p {
     font-size: 26px;
   }

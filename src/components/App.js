@@ -4,9 +4,10 @@ import GlobalStyles from "../GlobalStyles";
 import MovieScreen from "./MoviesScreen";
 import Showtime from "./Showtime";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Seats from "./Seats";
 
 export default function App() {
-  const [movieId, setMovieId] = React.useState(null);
+  const [movie, setMovie] = React.useState(undefined);
   const [title, setTitle] = React.useState("Selecione o filme");
 
   return (
@@ -17,17 +18,11 @@ export default function App() {
         <PageTitle>{title}</PageTitle>
         <Wrapper>
           <Routes>
-            <Route path="/" element={<MovieScreen setMovieId={setMovieId} />} />
-            <Route
-              path={"/sessoes/" + movieId}
-              element={
-                <Showtime
-                // movieTitle={movie.title}
-                // setTitle={setTitle}
-                // movieId={movie.id}
-                />
-              }
-            />
+            {/* <Route path="/" element={<MovieScreen setMovieId={setMovieId} />} /> */}
+            {!movie && (
+              <Route path={"/sessoes/:" + movie} element={<Showtime />} />
+            )}
+            <Route path="/" element={<Seats movie={movie} />} />
           </Routes>
         </Wrapper>
       </BrowserRouter>
@@ -59,6 +54,7 @@ const StyledHeader = styled.header`
 
 const Wrapper = styled.div`
   margin: 67px auto 0;
+  padding: 0 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
