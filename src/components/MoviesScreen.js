@@ -3,25 +3,26 @@ import styled from "styled-components";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default function MovieScreen({ setMovieId, setTitle }) {
+export default function MovieScreen({ setTitle }) {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    const URL = "https://mock-api.driven.com.br/api/v8/cineflex/movies";
+    const URL = "https://mock-api.driven.com.br/api/v5/cineflex/movies";
     const response = axios.get(URL);
     response.then((answer) => {
       setMovies(answer.data);
     });
 
     setTitle("Selecione o filme:");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <MoviesWrapper>
         {movies.map((m, index) => (
-          <Link to="/sessoes" key={index}>
-            <Poster key={m.id} onClick={() => setMovieId(m.id)}>
+          <Link to={`/sessoes/${m.id}`} key={index}>
+            <Poster key={m.id}>
               <img src={m.posterURL} alt={m.title} />
             </Poster>
           </Link>

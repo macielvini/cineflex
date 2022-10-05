@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Seats from "./Seats";
 
 export default function App() {
-  const [movieId, setMovieId] = React.useState();
   const [title, setTitle] = React.useState("Selecione o filme:");
 
   return (
@@ -22,19 +21,17 @@ export default function App() {
         <Wrapper>
           <PageTitle>{title}</PageTitle>
           <Routes>
+            <Route path="/" element={<MovieScreen setTitle={setTitle} />} />
+
             <Route
-              path="/"
-              element={
-                <MovieScreen setMovieId={setMovieId} setTitle={setTitle} />
-              }
+              path={`/sessoes/:movieId`}
+              element={<Showtime setTitle={setTitle} />}
             />
 
             <Route
-              path="/sessoes"
-              element={<Showtime setTitle={setTitle} movieId={movieId} />}
+              path="/assentos/:sessionId"
+              element={<Seats setTitle={setTitle} />}
             />
-
-            <Route path="/assentos" element={<Seats movieId={movieId} />} />
           </Routes>
         </Wrapper>
       </BrowserRouter>

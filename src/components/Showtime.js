@@ -1,32 +1,37 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 
-export default function Showtime({ setTitle, movieId }) {
+export default function Showtime({ setTitle }) {
   const [movie, setMovie] = useState({ days: [] });
 
+  let { movieId } = useParams();
+
   useEffect(() => {
-    const URL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${movieId}/showtimes`;
+    const URL = `https://mock-api.driven.com.br/api/v5/cineflex/movies/${movieId}/showtimes`;
     const response = axios.get(URL);
     response.then((answer) => {
       setMovie(answer.data);
     });
 
     setTitle("Selecione o horario:");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    // {movie === false ? <p>Carregando</p> : (
     <>
       <ShowtimeWrapper>
         {movie.days.map((d) => (
           <StyledShowtime key={d.id}>
             <p>
-              <span>{d.weekday}</span> - <span>{d.date}</span>{" "}
+              <span>{d.weekday}</span> - <span>{d.date}</span>
             </p>
             <div>
-              {d.showtimes.map((s) => (
-                <StyledButton key={s.id}>{s.name}</StyledButton>
+              {d.showtimes.map((s, index) => (
+                <Link to={`/assentos/${s.id} `} key={index}>
+                  <StyledButton key={s.id}>{s.name}</StyledButton>
+                </Link>
               ))}
             </div>
           </StyledShowtime>
@@ -39,7 +44,6 @@ export default function Showtime({ setTitle, movieId }) {
         <p>{movie.title}</p>
       </Footer>
     </>
-    // )}
   );
 }
 
