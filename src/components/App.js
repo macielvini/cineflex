@@ -3,27 +3,34 @@ import styled from "styled-components";
 import GlobalStyles from "../GlobalStyles";
 import MovieScreen from "./MoviesScreen";
 import Showtime from "./Showtime";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export default function App() {
-  const [movie, setMovie] = React.useState(null);
+  const [movieId, setMovieId] = React.useState(null);
   const [title, setTitle] = React.useState("Selecione o filme");
 
   return (
     <>
-      <GlobalStyles />
-      <StyledHeader onClick={() => setMovie(null)}>CINEFLEX</StyledHeader>
-      <Wrapper>
+      <BrowserRouter>
+        <GlobalStyles />
+        <StyledHeader>CINEFLEX</StyledHeader>
         <PageTitle>{title}</PageTitle>
-        {!movie ? (
-          <MovieScreen setMovie={setMovie} />
-        ) : (
-          <Showtime
-            movieTitle={movie.title}
-            setTitle={setTitle}
-            movieId={movie.id}
-          />
-        )}
-      </Wrapper>
+        <Wrapper>
+          <Routes>
+            <Route path="/" element={<MovieScreen setMovieId={setMovieId} />} />
+            <Route
+              path={"/sessoes/" + movieId}
+              element={
+                <Showtime
+                // movieTitle={movie.title}
+                // setTitle={setTitle}
+                // movieId={movie.id}
+                />
+              }
+            />
+          </Routes>
+        </Wrapper>
+      </BrowserRouter>
     </>
   );
 }

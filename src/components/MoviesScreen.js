@@ -83,10 +83,9 @@ const movies = [
   },
 ];
 
-export default function MovieScreen({ setMovie }) {
+export default function MovieScreen({ setMovieId }) {
   function selectMovie(movie) {
-    console.log(movie);
-    setMovie(movie);
+    setMovieId(movie.id);
   }
 
   return (

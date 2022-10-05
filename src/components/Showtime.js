@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 
 const movie = {
@@ -40,19 +41,22 @@ const movie = {
   ],
 };
 
-export default function Showtime({ setTitle, movieId }) {
-  setTitle("Selecione o horario:");
+export default function Showtime({ setTitle }) {
+  useEffect(() => {
+    setTitle("Selecione o horario:");
+  }, []);
+
   return (
     <>
       <ShowtimeWrapper>
         {movie.days.map((d) => (
-          <StyledShowtime>
+          <StyledShowtime key={d.id}>
             <p>
               <span>{d.weekday}</span> - <span>{d.date}</span>{" "}
             </p>
             <div>
               {d.showtimes.map((s) => (
-                <StyledButton>{s.name}</StyledButton>
+                <StyledButton key={s.id}>{s.name}</StyledButton>
               ))}
             </div>
           </StyledShowtime>
