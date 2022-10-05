@@ -1,52 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
-const movie = {
-  id: 2,
-  title: "Joker",
-  posterURL: "https://m.media-amazon.com/images/I/71Jxq2p5YWL._AC_SL1500_.jpg",
-  overview: "HaHahAhAhHa",
-  releaseDate: "2020-10-01T00:00:00.000Z",
-  days: [
-    {
-      id: 24062021,
-      weekday: "Quinta-feira",
-      date: "24/06/2021",
-      showtimes: [
-        {
-          name: "15:00",
-          id: 1,
-        },
-        {
-          name: "19:00",
-          id: 2,
-        },
-      ],
-    },
-    {
-      id: 25062021,
-      weekday: "Sexta-feira",
-      date: "25/06/2021",
-      showtimes: [
-        {
-          name: "12:00",
-          id: 3,
-        },
-        {
-          name: "18:00",
-          id: 4,
-        },
-      ],
-    },
-  ],
-};
+export default function Showtime({ setTitle, movieId }) {
+  const [movie, setMovie] = useState({ days: [] });
 
-export default function Showtime({ setTitle }) {
   useEffect(() => {
+    const URL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${movieId}/showtimes`;
+    const response = axios.get(URL);
+    response.then((answer) => {
+      setMovie(answer.data);
+    });
+
     setTitle("Selecione o horario:");
   }, []);
 
   return (
+    // {movie === false ? <p>Carregando</p> : (
     <>
       <ShowtimeWrapper>
         {movie.days.map((d) => (
@@ -69,6 +39,7 @@ export default function Showtime({ setTitle }) {
         <p>{movie.title}</p>
       </Footer>
     </>
+    // )}
   );
 }
 

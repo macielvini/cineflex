@@ -1,100 +1,30 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-const movies = [
-  {
-    id: 1,
-    title: "Forrest Gump",
-    posterURL:
-      "https://i.pinimg.com/originals/da/1b/42/da1b42a2603400ec6a5d371db8c9d1ed.jpg",
-    overview: "Run Forrest, run!",
-    releaseDate: "2020-10-01T00:00:00.000Z",
-    days: [
-      {
-        id: 24062021,
-        weekday: "Quinta-feira",
-        date: "24/06/2021",
-        showtimes: [
-          {
-            name: "15:00",
-            id: 1,
-          },
-          {
-            name: "19:00",
-            id: 2,
-          },
-        ],
-      },
-      {
-        id: 25062021,
-        weekday: "Sexta-feira",
-        date: "25/06/2021",
-        showtimes: [
-          {
-            name: "15:00",
-            id: 3,
-          },
-          {
-            name: "19:00",
-            id: 4,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "Joker",
-    posterURL:
-      "https://m.media-amazon.com/images/I/71Jxq2p5YWL._AC_SL1500_.jpg",
-    overview: "HaHahAhAhHa",
-    releaseDate: "2020-10-01T00:00:00.000Z",
-    days: [
-      {
-        id: 24062021,
-        weekday: "Quinta-feira",
-        date: "24/06/2021",
-        showtimes: [
-          {
-            name: "15:00",
-            id: 1,
-          },
-          {
-            name: "19:00",
-            id: 2,
-          },
-        ],
-      },
-      {
-        id: 25062021,
-        weekday: "Sexta-feira",
-        date: "25/06/2021",
-        showtimes: [
-          {
-            name: "15:00",
-            id: 3,
-          },
-          {
-            name: "19:00",
-            id: 4,
-          },
-        ],
-      },
-    ],
-  },
-];
+export default function MovieScreen({ setMovieId, setTitle }) {
+  const [movies, setMovies] = useState([]);
 
-export default function MovieScreen({ setMovieId }) {
-  function selectMovie(movie) {
-    setMovieId(movie.id);
-  }
+  useEffect(() => {
+    const URL = "https://mock-api.driven.com.br/api/v8/cineflex/movies";
+    const response = axios.get(URL);
+    response.then((answer) => {
+      setMovies(answer.data);
+    });
+
+    setTitle("Selecione o filme:");
+  }, []);
 
   return (
     <>
       <MoviesWrapper>
-        {movies.map((m) => (
-          <Poster key={m.id} onClick={() => selectMovie(m)}>
-            <img src={m.posterURL} alt="" />
-          </Poster>
+        {movies.map((m, index) => (
+          <Link to="/sessoes" key={index}>
+            <Poster key={m.id} onClick={() => setMovieId(m.id)}>
+              <img src={m.posterURL} alt={m.title} />
+            </Poster>
+          </Link>
         ))}
       </MoviesWrapper>
     </>
@@ -102,8 +32,8 @@ export default function MovieScreen({ setMovieId }) {
 }
 
 const MoviesWrapper = styled.div`
-  display: flex;
-
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 30px;
 `;
 

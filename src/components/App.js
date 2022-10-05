@@ -3,26 +3,38 @@ import styled from "styled-components";
 import GlobalStyles from "../GlobalStyles";
 import MovieScreen from "./MoviesScreen";
 import Showtime from "./Showtime";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Seats from "./Seats";
 
 export default function App() {
-  const [movie, setMovie] = React.useState(undefined);
-  const [title, setTitle] = React.useState("Selecione o filme");
+  const [movieId, setMovieId] = React.useState();
+  const [title, setTitle] = React.useState("Selecione o filme:");
 
   return (
     <>
       <BrowserRouter>
         <GlobalStyles />
-        <StyledHeader>CINEFLEX</StyledHeader>
-        <PageTitle>{title}</PageTitle>
+
+        <Link to="/">
+          <StyledHeader>CINEFLEX</StyledHeader>
+        </Link>
+
         <Wrapper>
+          <PageTitle>{title}</PageTitle>
           <Routes>
-            {/* <Route path="/" element={<MovieScreen setMovieId={setMovieId} />} /> */}
-            {!movie && (
-              <Route path={"/sessoes/:" + movie} element={<Showtime />} />
-            )}
-            <Route path="/" element={<Seats movie={movie} />} />
+            <Route
+              path="/"
+              element={
+                <MovieScreen setMovieId={setMovieId} setTitle={setTitle} />
+              }
+            />
+
+            <Route
+              path="/sessoes"
+              element={<Showtime setTitle={setTitle} movieId={movieId} />}
+            />
+
+            <Route path="/assentos" element={<Seats movieId={movieId} />} />
           </Routes>
         </Wrapper>
       </BrowserRouter>
