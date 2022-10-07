@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import Footer from "./Footer";
 
 export default function Seats({ setTitle }) {
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -141,18 +142,12 @@ export default function Seats({ setTitle }) {
             <BookSeatBtn type="submit">{"Reservar assento(s)"}</BookSeatBtn>
           </StyledForm>
 
-          <Footer>
-            <Poster>
-              <img src={seatsList.movie.posterURL} alt="" />
-            </Poster>
-            <div>
-              <p>{seatsList.movie.title}</p>
-              <p>
-                <span>{seatsList.day.weekday}</span> -
-                <span>{seatsList.name}</span>
-              </p>
-            </div>
-          </Footer>
+          <Footer
+            posterURL={seatsList.movie.posterURL}
+            title={seatsList.movie.title}
+            weekday={seatsList.day.weekday}
+            time={seatsList.name}
+          />
         </>
       )}
     </>
@@ -268,42 +263,4 @@ const BookSeatBtn = styled.button`
   align-items: center;
 
   color: #ffffff;
-`;
-
-const Footer = styled.div`
-  position: fixed;
-  left: 0;
-  bottom: 0;
-
-  display: flex;
-  align-items: center;
-
-  width: 100vw;
-  height: 117px;
-
-  background: #dfe6ed;
-  border: 1px solid #9eadba;
-
-  color: #293845;
-
-  p {
-    font-size: 26px;
-  }
-`;
-
-const Poster = styled.div`
-  width: 64px;
-  height: 89px;
-  padding: 8px;
-  background: #ffffff;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
-
-  margin: 14px;
-
-  img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
 `;
