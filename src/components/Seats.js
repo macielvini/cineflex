@@ -1,23 +1,28 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Seats({ setTitle }) {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [seatsList, setSeatList] = useState(false);
   const { sessionId } = useParams();
+  const [form, setForm] = useState({
+    name: "vini",
+    cpf: "12345678900",
+  });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const URL = `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${sessionId}/seats`;
 
-    const response = axios.get(URL);
+    const promise = axios.get(URL);
 
-    response.then((answer) => {
-      setSeatList(answer.data);
+    promise.then((res) => {
+      setSeatList(res.data);
     });
 
-    response.catch((err) => console.log(err.response.data));
+    promise.catch((err) => console.log(err.response.data));
 
     setTitle("Selecione o(s) assento(s):");
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -31,6 +36,43 @@ export default function Seats({ setTitle }) {
     }
 
     setSelectedSeats([...selectedSeats, seat]);
+  }
+
+  function bookSeats(e) {
+    e.preventDefault();
+
+    const seatsIds = selectedSeats.map((s) => s.id);
+
+    const body = {
+      ids: seatsIds,
+      name: form.name,
+      cpf: form.cpf,
+    };
+    const URL =
+      "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many";
+
+    const promise = axios.post(URL, body);
+    promise.then(() => {
+      navigate("/sucesso", {
+        state: {
+          seats: selectedSeats,
+          name: form.name,
+          cpf: form.cpf,
+          movieTitle: seatsList.movie.title,
+          weekday: seatsList.day.weekday,
+          time: seatsList.name,
+        },
+      });
+    });
+
+    promise.catch((err) => err.response.data);
+  }
+
+  function handleForm(e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   }
 
   return (
@@ -70,24 +112,34 @@ export default function Seats({ setTitle }) {
             </SeatDescription>
           </SeatDescriptionRow>
 
-          <StyledForm>
-            <label htmlFor="name">Nome do comprador</label>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              placeholder="Digite seu nome..."
-            />
-            <label htmlFor="cpf">CPF do comprador</label>
-            <input
-              id="cpf"
-              type="text"
-              name="cpf"
-              placeholder="Digite seu CPF..."
-            />
-          </StyledForm>
+          <StyledForm onSubmit={bookSeats}>
+            <div>
+              <label htmlFor="name">Nome do comprador</label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                placeholder="Digite seu nome..."
+                required={true}
+                onChange={handleForm}
+                value={form.name}
+              />
+              <label htmlFor="cpf">CPF do comprador</label>
+              <input
+                id="cpf"
+                type="text"
+                name="cpf"
+                placeholder="Digite seu CPF..."
+                minLength={11}
+                maxLength={11}
+                required={true}
+                onChange={handleForm}
+                value={form.cpf}
+              />
+            </div>
 
-          <BookSeatBtn>{"Reservar assento(s)"}</BookSeatBtn>
+            <BookSeatBtn type="submit">{"Reservar assento(s)"}</BookSeatBtn>
+          </StyledForm>
 
           <Footer>
             <Poster>
@@ -96,7 +148,7 @@ export default function Seats({ setTitle }) {
             <div>
               <p>{seatsList.movie.title}</p>
               <p>
-                <span>{seatsList.day.weekday}</span> -{" "}
+                <span>{seatsList.day.weekday}</span> -
                 <span>{seatsList.name}</span>
               </p>
             </div>
@@ -158,14 +210,20 @@ const SeatDescription = styled.div`
   gap: 7px;
 `;
 
-const StyledForm = styled.div`
+const StyledForm = styled.form`
   width: 100%;
   max-width: 400px;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  align-items: center;
 
-  /* border: 1px solid red; */
+  div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  margin: 0 auto;
 
   * {
     margin-bottom: 10px;
@@ -194,12 +252,13 @@ const StyledForm = styled.div`
   }
 `;
 
-const BookSeatBtn = styled.div`
+const BookSeatBtn = styled.button`
   width: 225px;
   height: 42px;
 
   background: #e8833a;
   border-radius: 3px;
+  border: none;
 
   margin-top: 50px;
 

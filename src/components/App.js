@@ -5,6 +5,7 @@ import MovieScreen from "./MoviesScreen";
 import Showtime from "./Showtime";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Seats from "./Seats";
+import Order from "./Order";
 
 export default function App() {
   const [title, setTitle] = React.useState("Selecione o filme:");
@@ -32,6 +33,7 @@ export default function App() {
               path="/assentos/:sessionId"
               element={<Seats setTitle={setTitle} />}
             />
+            <Route path="/sucesso" element={<Order setTitle={setTitle} />} />
           </Routes>
         </Wrapper>
       </BrowserRouter>
@@ -62,7 +64,7 @@ const StyledHeader = styled.header`
 `;
 
 const Wrapper = styled.div`
-  margin: 67px auto 0;
+  margin: 67px auto 130px;
   padding: 0 24px;
   display: flex;
   flex-direction: column;
