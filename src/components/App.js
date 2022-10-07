@@ -3,10 +3,10 @@ import styled from "styled-components";
 import GlobalStyles from "../GlobalStyles";
 import MovieScreen from "./MoviesScreen";
 import Showtime from "./Showtime";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Seats from "./Seats";
 import Order from "./Order";
 import Header from "./Header";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 export default function App() {
   const [title, setTitle] = React.useState("Selecione o filme:");
