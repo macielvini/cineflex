@@ -6,6 +6,7 @@ import Showtime from "./Showtime";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Seats from "./Seats";
 import Order from "./Order";
+import Header from "./Header";
 
 export default function App() {
   const [title, setTitle] = React.useState("Selecione o filme:");
@@ -16,7 +17,7 @@ export default function App() {
         <GlobalStyles />
 
         <Link to="/">
-          <StyledHeader>CINEFLEX</StyledHeader>
+          <Header />
         </Link>
 
         <Wrapper>
@@ -40,28 +41,6 @@ export default function App() {
     </>
   );
 }
-
-const StyledHeader = styled.header`
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 67px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background: #c3cfd9;
-
-  color: #e8833a;
-  font-size: 32px;
-  font-weight: 700;
-  text-align: center;
-
-  cursor: pointer;
-`;
 
 const Wrapper = styled.div`
   margin: 67px auto 130px;
