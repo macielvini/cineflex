@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 export default function App() {
   const [title, setTitle] = React.useState("Selecione o filme:");
+  const [darkTheme, setDarkTheme] = React.useState(false);
 
   return (
     <>
@@ -17,7 +18,7 @@ export default function App() {
         <GlobalStyles />
 
         <Link to="/">
-          <Header />
+          <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
         </Link>
 
         <Wrapper>
