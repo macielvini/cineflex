@@ -1,14 +1,16 @@
 import styled from "styled-components";
-import moon from "../assets/moon-outline.svg";
-import sun from "../assets/sunny-outline.svg";
 
 export default function Header({ darkTheme, setDarkTheme }) {
   return (
     <>
-      <StyledHeader>
+      <StyledHeader darkTheme={darkTheme}>
         CINEFLEX
         <div onClick={() => setDarkTheme(!darkTheme)}>
-          <img src={darkTheme ? sun : moon} alt="" />
+          {darkTheme ? (
+            <ion-icon name="sunny"></ion-icon>
+          ) : (
+            <ion-icon name="moon"></ion-icon>
+          )}
         </div>
       </StyledHeader>
     </>
@@ -27,9 +29,9 @@ const StyledHeader = styled.header`
   justify-content: center;
   align-items: center;
 
-  background: #c3cfd9;
+  background: ${(props) => (props.darkTheme ? "#DA915D" : "#c3cfd9")};
 
-  color: #e8833a;
+  color: ${(props) => (props.darkTheme ? "#fff" : "#e8833a")};
   font-size: 32px;
   font-weight: 700;
   text-align: center;
@@ -38,24 +40,27 @@ const StyledHeader = styled.header`
 
   div {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
-    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
 
-    width: 30px;
-    height: 30px;
-    background-color: white;
-
+    color: ${(props) => (props.darkTheme ? "#fff" : "#121212")};
     position: absolute;
     top: 50%;
     right: 20px;
     transform: translateY(-50%);
     z-index: 10;
+
+    &:hover {
+      background-color: ${(props) => (props.darkTheme ? "#fff" : "#121212")};
+      color: ${(props) => (!props.darkTheme ? "#fff" : "#121212")};
+    }
   }
 
-  img {
-    height: 90%;
-    width: 90%;
+  ion-icon {
+    font-size: 30px;
   }
 `;
