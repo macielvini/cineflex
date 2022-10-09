@@ -7,6 +7,7 @@ export default function Order({ setTitle }) {
 
   useEffect(() => {
     setTitle("Pedido feito com sucesso");
+    //se for /sucesso ai p verdinho
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

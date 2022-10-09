@@ -22,6 +22,7 @@ export default function App() {
 
         <Wrapper>
           <PageTitle>{title}</PageTitle>
+
           <Routes>
             <Route path="/" element={<MovieScreen setTitle={setTitle} />} />
 
@@ -34,6 +35,7 @@ export default function App() {
               path="/assentos/:sessionId"
               element={<Seats setTitle={setTitle} />}
             />
+
             <Route path="/sucesso" element={<Order setTitle={setTitle} />} />
           </Routes>
         </Wrapper>
@@ -53,4 +55,8 @@ const Wrapper = styled.div`
 const PageTitle = styled.p`
   margin: 30px 0;
   font-size: 24px;
+
+  color: ${window.location.pathname === "/sucesso" ? "#247a6b" : "black"};
+
+  font-weight: ${window.location.pathname === "/sucesso" ? 700 : 400};
 `;
