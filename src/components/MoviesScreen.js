@@ -22,8 +22,6 @@ export default function MovieScreen({ setTitle, darkTheme }) {
 
     promise.catch((err) => console.log(err.response.data));
 
-    console.log("movies screen");
-
     return () => {
       isMounted = false;
     };

@@ -28,8 +28,6 @@ export default function Seats({ setTitle, darkTheme }) {
 
     promise.catch((err) => console.log(err.response.data));
 
-    console.log("seats");
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -99,7 +97,7 @@ export default function Seats({ setTitle, darkTheme }) {
                   {s.name}
                 </StyledSeat>
               ) : (
-                <UnavaiableSeat key={s.id}>{s.name}</UnavaiableSeat>
+                <UnavailableSeat key={s.id}>{s.name}</UnavailableSeat>
               )
             )}
           </SeatsWrapper>
@@ -114,7 +112,7 @@ export default function Seats({ setTitle, darkTheme }) {
               <p>Disponível</p>
             </SeatDescription>
             <SeatDescription>
-              <UnavaiableSeat />
+              <UnavailableSeat />
               <p>Indisponível</p>
             </SeatDescription>
           </SeatDescriptionRow>
@@ -194,7 +192,7 @@ const SelectedSeat = styled(StyledSeat)`
   border: 1px solid #0e7d71;
 `;
 
-const UnavaiableSeat = styled(StyledSeat)`
+const UnavailableSeat = styled(StyledSeat)`
   background: #fbe192;
   border: 1px solid #f7c52b;
 `;

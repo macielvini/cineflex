@@ -16,7 +16,7 @@ export default function Showtime({ setTitle }) {
       setMovie(answer.data);
     });
 
-    setTitle("Selecione o horario:");
+    setTitle("Selecione o horário:");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
