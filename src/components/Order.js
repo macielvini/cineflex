@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import colors from "../colors";
 
-export default function Order({ setTitle }) {
+export default function Order({ setTitle, darkTheme }) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,7 +16,7 @@ export default function Order({ setTitle }) {
 
   return (
     <>
-      <Wrapper>
+      <Wrapper darkTheme={darkTheme}>
         <div>
           <Heading>Filme e sessão</Heading>
           <div>
@@ -52,9 +53,11 @@ const Wrapper = styled.div`
   width: 100%;
   font-size: 30px;
 
-  p {
-    font-size: 22px;
-    color: #293845;
+  color: ${(props) =>
+    props.darkTheme ? colors["darkFont"] : colors["lightFont"]};
+
+  div > div > p {
+    font-size: 18px;
   }
 
   & > div {
@@ -67,17 +70,17 @@ const Wrapper = styled.div`
 `;
 
 const Heading = styled.p`
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
-  color: #293845;
 `;
 
-const Btn = styled.div`
+const Btn = styled.button`
   width: 225px;
   height: 42px;
 
   background: #e8833a;
   border-radius: 3px;
+  border: none;
 
   margin-top: 50px;
 
@@ -87,4 +90,6 @@ const Btn = styled.div`
   align-items: center;
 
   color: #ffffff;
+
+  cursor: pointer;
 `;

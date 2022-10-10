@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Footer from "./Footer";
 
-export default function Showtime({ setTitle }) {
+export default function Showtime({ setTitle, darkTheme }) {
   const [movie, setMovie] = useState({ days: [] });
 
   let { movieId } = useParams();
@@ -38,7 +38,11 @@ export default function Showtime({ setTitle }) {
           </StyledShowtime>
         ))}
       </ShowtimeWrapper>
-      <Footer posterURL={movie.posterURL} title={movie.title} />
+      <Footer
+        darkTheme={darkTheme}
+        posterURL={movie.posterURL}
+        title={movie.title}
+      />
     </>
   );
 }

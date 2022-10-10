@@ -1,11 +1,20 @@
 import styled from "styled-components";
+import colors from "../colors";
 
 export default function Header({ darkTheme, setDarkTheme }) {
+  function changeTheme() {
+    const res = window.confirm(
+      "Ao mudar o tema a página será recarregada. Deseja continuar?"
+    );
+
+    if (res) setDarkTheme(!darkTheme);
+  }
+
   return (
     <>
       <StyledHeader darkTheme={darkTheme}>
         CINEFLEX
-        <div onClick={() => setDarkTheme(!darkTheme)}>
+        <div onClick={() => changeTheme()}>
           {darkTheme ? (
             <ion-icon name="sunny"></ion-icon>
           ) : (
@@ -47,17 +56,13 @@ const StyledHeader = styled.header`
     height: 35px;
     border-radius: 50%;
 
-    color: ${(props) => (props.darkTheme ? "#fff" : "#121212")};
+    color: ${(props) =>
+      props.darkTheme ? "#fff" : colors["footerBorderDark"]};
     position: absolute;
     top: 50%;
     right: 20px;
     transform: translateY(-50%);
     z-index: 10;
-
-    &:hover {
-      background-color: ${(props) => (props.darkTheme ? "#fff" : "#121212")};
-      color: ${(props) => (!props.darkTheme ? "#fff" : "#121212")};
-    }
   }
 
   ion-icon {

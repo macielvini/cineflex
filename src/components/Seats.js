@@ -3,8 +3,9 @@ import styled from "styled-components";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "./Footer";
+import colors from "../colors";
 
-export default function Seats({ setTitle }) {
+export default function Seats({ setTitle, darkTheme }) {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [seatsList, setSeatList] = useState(false);
   const { sessionId } = useParams();
@@ -113,7 +114,7 @@ export default function Seats({ setTitle }) {
             </SeatDescription>
           </SeatDescriptionRow>
 
-          <StyledForm onSubmit={bookSeats}>
+          <StyledForm onSubmit={bookSeats} darkTheme={darkTheme}>
             <div>
               <label htmlFor="name">Nome do comprador</label>
               <input
@@ -147,6 +148,7 @@ export default function Seats({ setTitle }) {
             title={seatsList.movie.title}
             weekday={seatsList.day.weekday}
             time={seatsList.name}
+            darkTheme={darkTheme}
           />
         </>
       )}
@@ -171,11 +173,15 @@ const StyledSeat = styled.div`
   justify-content: center;
   align-items: center;
 
+  color: ${(props) => (props.isSelected ? "#fff " : colors["lightFont"])};
+
   background: ${(props) => (props.isSelected ? "#1aae9e " : "#c3cfd9")};
   border: 1px solid ${(props) => (props.isSelected ? "#0e7d71 " : "#808f9d")};
   border-radius: 50%;
 
   font-size: 11px;
+
+  cursor: pointer;
 `;
 
 const SelectedSeat = styled(StyledSeat)`
@@ -212,6 +218,9 @@ const StyledForm = styled.form`
   flex-direction: column;
   align-items: center;
 
+  color: ${(props) =>
+    props.darkTheme ? colors["darkFont"] : colors["lightFont"]};
+
   div {
     display: flex;
     flex-direction: column;
@@ -226,7 +235,6 @@ const StyledForm = styled.form`
 
   label {
     font-size: 18px;
-    color: #293845;
   }
 
   input {
@@ -237,6 +245,12 @@ const StyledForm = styled.form`
 
     font-size: 18px;
     padding-left: 10px;
+
+    background: ${(props) =>
+      props.darkTheme ? colors["darkBg"] : colors["lightBg"]};
+
+    color: ${(props) =>
+      props.darkTheme ? colors["darkFont"] : colors["lightFont"]};
 
     &::placeholder {
       font-weight: 400;
@@ -263,4 +277,6 @@ const BookSeatBtn = styled.button`
   align-items: center;
 
   color: #ffffff;
+
+  cursor: pointer;
 `;

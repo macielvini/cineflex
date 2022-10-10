@@ -6,6 +6,7 @@ import Showtime from "./Showtime";
 import Seats from "./Seats";
 import Order from "./Order";
 import Header from "./Header";
+import colors from "../colors";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 export default function App() {
@@ -21,23 +22,26 @@ export default function App() {
           <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
         </Link>
 
-        <Wrapper>
-          <PageTitle>{title}</PageTitle>
+        <Wrapper darkTheme={darkTheme}>
+          <PageTitle darkTheme={darkTheme}>{title}</PageTitle>
 
           <Routes>
             <Route path="/" element={<MovieScreen setTitle={setTitle} />} />
 
             <Route
               path={`/sessoes/:movieId`}
-              element={<Showtime setTitle={setTitle} />}
+              element={<Showtime darkTheme={darkTheme} setTitle={setTitle} />}
             />
 
             <Route
               path="/assentos/:sessionId"
-              element={<Seats setTitle={setTitle} />}
+              element={<Seats setTitle={setTitle} darkTheme={darkTheme} />}
             />
 
-            <Route path="/sucesso" element={<Order setTitle={setTitle} />} />
+            <Route
+              path="/sucesso"
+              element={<Order darkTheme={darkTheme} setTitle={setTitle} />}
+            />
           </Routes>
         </Wrapper>
       </BrowserRouter>
@@ -46,18 +50,30 @@ export default function App() {
 }
 
 const Wrapper = styled.div`
-  margin: 67px auto 130px;
-  padding: 0 24px;
+  margin: 0 auto;
+  padding: 67px 24px 130px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  min-height: 100vh;
+
+  background-color: ${(props) =>
+    props.darkTheme ? colors["darkBg"] : colors["lightBg"]};
+  color: ${(props) =>
+    props.darkTheme ? colors["darkFont"] : colors["lightFont"]};
 `;
 
 const PageTitle = styled.p`
   margin: 30px 0;
   font-size: 24px;
 
-  color: ${window.location.pathname === "/sucesso" ? "#247a6b" : "black"};
+  color: ${(props) =>
+    window.location.pathname === "/sucesso"
+      ? colors["successFont"]
+      : props.darkTheme
+      ? colors["darkFont"]
+      : colors["lightFont"]};
 
-  font-weight: ${window.location.pathname === "/sucesso" ? 700 : 400};
+  font-weight: 700;
 `;

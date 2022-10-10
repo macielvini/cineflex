@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import colors from "../colors";
 
-export default function Footer({ posterURL, title, weekday, time }) {
+export default function Footer({ posterURL, title, weekday, time, darkTheme }) {
   return (
     <>
       {" "}
-      <StyledFooter>
+      <StyledFooter darkTheme={darkTheme}>
         <Poster>
           <img src={posterURL} alt="" />
         </Poster>
@@ -28,10 +29,16 @@ const StyledFooter = styled.div`
   width: 100vw;
   height: 117px;
 
-  background: #dfe6ed;
-  border: 1px solid #9eadba;
+  background: ${(props) =>
+    props.darkTheme ? colors["footerBgDark"] : colors["footerBgLight"]};
+  border-top: 1px solid
+    ${(props) =>
+      props.darkTheme
+        ? colors["footerBorderDark"]
+        : colors["footerBorderLight"]};
 
-  color: #293845;
+  color: ${(props) =>
+    props.darkTheme ? colors["darkFont"] : colors["lightFont"]};
 
   p {
     font-size: 26px;
