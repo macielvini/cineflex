@@ -6,7 +6,7 @@ const colors = {
   lightHeaderBg: "C3CFD9",
   lightBg: "fff",
   lightFont: "#293845",
-  successFont: "#247a6b",
+  successFont: "#06C270",
   footerBgDark: "#28293D",
   footerBgLight: "#dfe6ed",
   footerBorderLight: "#9eadba",

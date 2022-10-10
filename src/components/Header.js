@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../colors";
 
 export default function Header({ darkTheme, setDarkTheme }) {
+  const navigate = useNavigate();
+
   function changeTheme() {
     const res = window.confirm(
       "Ao mudar o tema a página será recarregada. Deseja continuar?"
@@ -13,6 +16,7 @@ export default function Header({ darkTheme, setDarkTheme }) {
   return (
     <>
       <StyledHeader darkTheme={darkTheme}>
+        <ion-icon name="arrow-back" onClick={() => navigate(-1)}></ion-icon>
         CINEFLEX
         <div onClick={() => changeTheme()}>
           {darkTheme ? (
@@ -33,9 +37,10 @@ const StyledHeader = styled.header`
 
   width: 100%;
   height: 67px;
+  padding: 0 20px;
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
   background: ${(props) => (props.darkTheme ? "#DA915D" : "#c3cfd9")};
@@ -58,11 +63,6 @@ const StyledHeader = styled.header`
 
     color: ${(props) =>
       props.darkTheme ? "#fff" : colors["footerBorderDark"]};
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    z-index: 10;
   }
 
   ion-icon {

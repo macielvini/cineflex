@@ -49,6 +49,10 @@ export default function Showtime({ setTitle, darkTheme }) {
 
 const ShowtimeWrapper = styled.div`
   width: 100%;
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 const StyledShowtime = styled.div`
@@ -81,6 +85,8 @@ const StyledButton = styled.div`
 
   background: #e8833a;
   border-radius: 3px;
+
+  text-decoration: none;
 
   &:hover {
     background: hsla(25, 79%, 50%, 1);

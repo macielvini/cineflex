@@ -43,6 +43,8 @@ export default function Seats({ setTitle, darkTheme }) {
   function bookSeats(e) {
     e.preventDefault();
 
+    if (selectedSeats.length === 0) return;
+
     const seatsIds = selectedSeats.map((s) => s.id);
 
     const body = {
