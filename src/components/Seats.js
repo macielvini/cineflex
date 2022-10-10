@@ -13,6 +13,7 @@ export default function Seats({ setTitle, darkTheme }) {
     name: "vini",
     cpf: "12345678900",
   });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,11 +23,13 @@ export default function Seats({ setTitle, darkTheme }) {
 
     promise.then((res) => {
       setSeatList(res.data);
+      setTitle("Selecione o(s) assento(s):");
     });
 
     promise.catch((err) => console.log(err.response.data));
 
-    setTitle("Selecione o(s) assento(s):");
+    console.log("seats");
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

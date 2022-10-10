@@ -26,7 +26,12 @@ export default function App() {
           <PageTitle darkTheme={darkTheme}>{title}</PageTitle>
 
           <Routes>
-            <Route path="/" element={<MovieScreen setTitle={setTitle} />} />
+            <Route
+              path="/"
+              element={
+                <MovieScreen darkTheme={darkTheme} setTitle={setTitle} />
+              }
+            />
 
             <Route
               path={`/sessoes/:movieId`}

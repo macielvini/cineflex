@@ -14,9 +14,11 @@ export default function Showtime({ setTitle, darkTheme }) {
     const response = axios.get(URL);
     response.then((answer) => {
       setMovie(answer.data);
+      setTitle("Selecione o horario:");
     });
 
-    setTitle("Selecione o horario:");
+    console.log("showtime");
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -4,6 +4,7 @@ import colors from "../colors";
 
 export default function Header({ darkTheme, setDarkTheme }) {
   const navigate = useNavigate();
+  // const navigation = useNavigation();
 
   function changeTheme() {
     const res = window.confirm(
@@ -34,6 +35,7 @@ const StyledHeader = styled.header`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1;
 
   width: 100%;
   height: 67px;
