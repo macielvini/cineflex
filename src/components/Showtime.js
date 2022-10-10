@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Footer from "./Footer";
 
-export default function Showtime({ setTitle, darkTheme }) {
+export default function Showtime({ setTitle }) {
   const [movie, setMovie] = useState({ days: [] });
 
   let { movieId } = useParams();
@@ -14,11 +14,9 @@ export default function Showtime({ setTitle, darkTheme }) {
     const response = axios.get(URL);
     response.then((answer) => {
       setMovie(answer.data);
-      setTitle("Selecione o horario:");
     });
 
-    console.log("showtime");
-
+    setTitle("Selecione o horario:");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -40,21 +38,13 @@ export default function Showtime({ setTitle, darkTheme }) {
           </StyledShowtime>
         ))}
       </ShowtimeWrapper>
-      <Footer
-        darkTheme={darkTheme}
-        posterURL={movie.posterURL}
-        title={movie.title}
-      />
+      <Footer posterURL={movie.posterURL} title={movie.title} />
     </>
   );
 }
 
 const ShowtimeWrapper = styled.div`
   width: 100%;
-
-  a {
-    text-decoration: none;
-  }
 `;
 
 const StyledShowtime = styled.div`
@@ -87,8 +77,6 @@ const StyledButton = styled.div`
 
   background: #e8833a;
   border-radius: 3px;
-
-  text-decoration: none;
 
   &:hover {
     background: hsla(25, 79%, 50%, 1);

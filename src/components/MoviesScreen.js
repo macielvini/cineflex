@@ -18,7 +18,6 @@ export default function MovieScreen({ setTitle, darkTheme }) {
         setMovies(answer.data);
         setTitle("Selecione o filme:");
       }
-      console.log("then moviescreen", isMounted);
     });
 
     promise.catch((err) => console.log(err.response.data));

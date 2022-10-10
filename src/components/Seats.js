@@ -10,8 +10,8 @@ export default function Seats({ setTitle, darkTheme }) {
   const [seatsList, setSeatList] = useState(false);
   const { sessionId } = useParams();
   const [form, setForm] = useState({
-    name: "vini",
-    cpf: "12345678900",
+    name: "",
+    cpf: "",
   });
 
   const navigate = useNavigate();
